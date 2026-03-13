@@ -17,6 +17,7 @@
 package com.epam.reportportal.base.core.configs;
 
 import com.epam.reportportal.base.core.widget.content.updater.validator.ActivityContentValidator;
+import com.epam.reportportal.base.core.widget.content.updater.validator.AnalyzerProjectWidgetValidator;
 import com.epam.reportportal.base.core.widget.content.updater.validator.BugTrendChartContentValidator;
 import com.epam.reportportal.base.core.widget.content.updater.validator.CasesTrendContentValidator;
 import com.epam.reportportal.base.core.widget.content.updater.validator.ChartInvestigatedContentValidator;
@@ -97,6 +98,10 @@ public class WidgetValidatorConfig {
             applicationContext.getBean(MostTimeConsumingContentValidator.class))
         .put(WidgetType.PRODUCT_STATUS,
             applicationContext.getBean(ProductStatusContentValidator.class))
+        .put(WidgetType.TRIAGE_AGING_HEATMAP,
+            applicationContext.getBean(AnalyzerProjectWidgetValidator.class))
+        .put(WidgetType.ANALYZER_COVERAGE_KPI,
+            applicationContext.getBean(AnalyzerProjectWidgetValidator.class))
         .put(WidgetType.TEST_CASE_SEARCH,
             applicationContext.getBean(TestCaseSearchValidator.class))
         .build();

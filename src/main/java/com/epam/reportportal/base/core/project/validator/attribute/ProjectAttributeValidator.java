@@ -29,9 +29,20 @@ import static com.epam.reportportal.base.infrastructure.persistence.entity.enums
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.KEEP_LOGS;
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.KEEP_SCREENSHOTS;
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.LARGEST_RETRY_PRIORITY;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.LAUNCH_COMPARISON_ENABLED;
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.NOTIFICATIONS_EMAIL_ENABLED;
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.NOTIFICATIONS_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.CONFIDENCE_SCORE_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.COVERAGE_KPI_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.FLAKINESS_BADGE_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.HYBRID_SEARCH_INDICATOR_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.INSIGHTS_PAGE_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.QUARANTINE_TAB_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.RANKED_SUGGESTIONS_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.RELEASE_AGGREGATE_ENABLED;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.ROOT_CAUSE_CLUSTERS_ENABLED;
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.SEARCH_LOGS_MIN_SHOULD_MATCH;
+import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.TRIAGE_AGING_ENABLED;
 import static com.epam.reportportal.base.infrastructure.persistence.entity.enums.ProjectAttributeEnum.UNIQUE_ERROR_ANALYZER_REMOVE_NUMBERS;
 import static com.epam.reportportal.base.infrastructure.rules.commons.validation.BusinessRule.expect;
 import static com.epam.reportportal.base.infrastructure.rules.exception.ErrorType.BAD_REQUEST_ERROR;
@@ -137,7 +148,18 @@ public class ProjectAttributeValidator {
         ALL_MESSAGES_SHOULD_MATCH,
         AUTO_UNIQUE_ERROR_ANALYZER_ENABLED,
         UNIQUE_ERROR_ANALYZER_REMOVE_NUMBERS,
-        LARGEST_RETRY_PRIORITY
+        LARGEST_RETRY_PRIORITY,
+        INSIGHTS_PAGE_ENABLED,
+        FLAKINESS_BADGE_ENABLED,
+        QUARANTINE_TAB_ENABLED,
+        CONFIDENCE_SCORE_ENABLED,
+        RANKED_SUGGESTIONS_ENABLED,
+        ROOT_CAUSE_CLUSTERS_ENABLED,
+        TRIAGE_AGING_ENABLED,
+        COVERAGE_KPI_ENABLED,
+        RELEASE_AGGREGATE_ENABLED,
+        LAUNCH_COMPARISON_ENABLED,
+        HYBRID_SEARCH_INDICATOR_ENABLED
     );
 
     booleanAttributes.stream()

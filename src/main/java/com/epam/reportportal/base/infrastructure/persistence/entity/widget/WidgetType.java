@@ -49,7 +49,9 @@ public enum WidgetType {
   TOP_PATTERN_TEMPLATES("topPatternTemplates", true, false),
   COMPONENT_HEALTH_CHECK("componentHealthCheck", true, false),
   COMPONENT_HEALTH_CHECK_TABLE("componentHealthCheckTable", true, false),
-  TEST_CASE_SEARCH("testCaseSearch", false, false);
+  TEST_CASE_SEARCH("testCaseSearch", false, false),
+  TRIAGE_AGING_HEATMAP("triageAgingHeatmap", false, false),
+  ANALYZER_COVERAGE_KPI("analyzerCoverageKpi", false, false);
 
   private final String type;
 

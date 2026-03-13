@@ -56,7 +56,19 @@ public enum ProjectAttributeEnum {
       String.valueOf(true)),
   UNIQUE_ERROR_ANALYZER_REMOVE_NUMBERS(Prefix.ANALYZER + Prefix.UNIQUE_ERROR + "removeNumbers",
       String.valueOf(true)),
-  LARGEST_RETRY_PRIORITY(Prefix.ANALYZER + "largestRetryPriority", String.valueOf(false));
+    LARGEST_RETRY_PRIORITY(Prefix.ANALYZER + "largestRetryPriority", String.valueOf(false)),
+    INSIGHTS_PAGE_ENABLED(Prefix.ANALYZER + "insightsPageEnabled", String.valueOf(true)),
+    FLAKINESS_BADGE_ENABLED(Prefix.ANALYZER + "flakinessBadgeEnabled", String.valueOf(true)),
+    QUARANTINE_TAB_ENABLED(Prefix.ANALYZER + "quarantineTabEnabled", String.valueOf(true)),
+    CONFIDENCE_SCORE_ENABLED(Prefix.ANALYZER + "confidenceScoreEnabled", String.valueOf(true)),
+    RANKED_SUGGESTIONS_ENABLED(Prefix.ANALYZER + "rankedSuggestionsEnabled", String.valueOf(true)),
+    ROOT_CAUSE_CLUSTERS_ENABLED(Prefix.ANALYZER + "rootCauseClustersEnabled", String.valueOf(true)),
+    TRIAGE_AGING_ENABLED(Prefix.ANALYZER + "triageAgingEnabled", String.valueOf(true)),
+    COVERAGE_KPI_ENABLED(Prefix.ANALYZER + "coverageKpiEnabled", String.valueOf(true)),
+    RELEASE_AGGREGATE_ENABLED(Prefix.ANALYZER + "releaseAggregateEnabled", String.valueOf(true)),
+    LAUNCH_COMPARISON_ENABLED(Prefix.ANALYZER + "launchComparisonEnabled", String.valueOf(true)),
+    HYBRID_SEARCH_INDICATOR_ENABLED(Prefix.ANALYZER + "hybridSearchIndicatorEnabled",
+      String.valueOf(true));
 
   public static final String FOREVER_ALIAS = "0";
   private String attribute;

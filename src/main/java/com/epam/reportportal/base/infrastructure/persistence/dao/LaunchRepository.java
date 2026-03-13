@@ -166,6 +166,12 @@ public interface LaunchRepository extends ReportPortalRepository<Launch, Long>,
   Optional<Launch> findLatestByNameAndProjectId(@Param("name") String name,
       @Param("projectId") Long projectId);
 
+  List<Launch> findTop20ByProjectIdAndModeNotOrderByStartTimeDescNumberDesc(Long projectId,
+      LaunchModeEnum mode);
+
+  List<Launch> findTop200ByProjectIdAndModeNotOrderByStartTimeDescNumberDesc(Long projectId,
+      LaunchModeEnum mode);
+
   Optional<Launch> findLaunchByProjectIdAndNameAndNumberAndIdNotAndModeNot(Long projectId,
       String name, Long number, Long launchId, LaunchModeEnum mode);
 

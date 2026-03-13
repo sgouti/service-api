@@ -263,6 +263,8 @@ public interface TestItemRepository extends ReportPortalRepository<TestItem, Lon
 
   List<TestItem> findTestItemsByLaunchId(Long launchId);
 
+    List<TestItem> findTestItemsByLaunchIdInOrderByStartTimeAsc(Collection<Long> launchIds);
+
   Optional<TestItem> findByUuid(String uuid);
 
   /**

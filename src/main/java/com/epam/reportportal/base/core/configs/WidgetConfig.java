@@ -25,6 +25,7 @@ import com.epam.reportportal.base.core.widget.content.filter.GeneralLaunchFilter
 import com.epam.reportportal.base.core.widget.content.filter.LaunchHistoryFilterStrategy;
 import com.epam.reportportal.base.core.widget.content.filter.ProductStatusFilterStrategy;
 import com.epam.reportportal.base.core.widget.content.loader.ActivityContentLoader;
+import com.epam.reportportal.base.core.widget.content.loader.AnalyzerCoverageKpiContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.BugTrendChartContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.CasesTrendContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.ChartInvestigatedContentLoader;
@@ -44,6 +45,7 @@ import com.epam.reportportal.base.core.widget.content.loader.PassingRateSummaryC
 import com.epam.reportportal.base.core.widget.content.loader.ProductStatusContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.ProductStatusFilterGroupedContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.ProductStatusLaunchGroupedContentLoader;
+import com.epam.reportportal.base.core.widget.content.loader.TriageAgingHeatmapContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.TopPatternContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.TopTestCasesContentLoader;
 import com.epam.reportportal.base.core.widget.content.loader.UniqueBugContentLoader;
@@ -127,6 +129,10 @@ public class WidgetConfig implements ApplicationContextAware {
             applicationContext.getBean(ProductStatusContentLoaderManager.class))
         .put(WidgetType.MOST_TIME_CONSUMING,
             applicationContext.getBean(MostTimeConsumingContentLoader.class))
+        .put(WidgetType.TRIAGE_AGING_HEATMAP,
+            applicationContext.getBean(TriageAgingHeatmapContentLoader.class))
+        .put(WidgetType.ANALYZER_COVERAGE_KPI,
+            applicationContext.getBean(AnalyzerCoverageKpiContentLoader.class))
         .put(WidgetType.TEST_CASE_SEARCH, applicationContext.getBean(EmptyContentLoader.class))
         .build();
   }
@@ -199,6 +205,10 @@ public class WidgetConfig implements ApplicationContextAware {
             (GeneralLaunchFilterStrategy) applicationContext.getBean("generalLaunchFilterStrategy")
         ).put(WidgetType.TEST_CASE_SEARCH,
             (GeneralLaunchFilterStrategy) applicationContext.getBean("generalLaunchFilterStrategy")
+        ).put(WidgetType.TRIAGE_AGING_HEATMAP,
+            (GeneralLaunchFilterStrategy) applicationContext.getBean("generalLaunchFilterStrategy")
+        ).put(WidgetType.ANALYZER_COVERAGE_KPI,
+            (GeneralLaunchFilterStrategy) applicationContext.getBean("generalLaunchFilterStrategy")
         )
         .build();
   }
@@ -230,6 +240,8 @@ public class WidgetConfig implements ApplicationContextAware {
         .add(WidgetType.PASSING_RATE_PER_LAUNCH)
         .add(WidgetType.MOST_TIME_CONSUMING)
         .add(WidgetType.FLAKY_TEST_CASES)
+        .add(WidgetType.TRIAGE_AGING_HEATMAP)
+        .add(WidgetType.ANALYZER_COVERAGE_KPI)
         .add(WidgetType.TEST_CASE_SEARCH)
         .build();
   }
