@@ -33,6 +33,9 @@ public class AnalyzedItemRs {
   @JsonProperty("issueType")
   private String locator;
 
+  @JsonProperty("analysisSource")
+  private String analysisSource;
+
   public Long getItemId() {
     return itemId;
   }
@@ -57,6 +60,14 @@ public class AnalyzedItemRs {
     this.locator = locator;
   }
 
+  public String getAnalysisSource() {
+    return analysisSource;
+  }
+
+  public void setAnalysisSource(String analysisSource) {
+    this.analysisSource = analysisSource;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -77,6 +88,6 @@ public class AnalyzedItemRs {
   @Override
   public String toString() {
     return "AnalyzedItemRs{" + "itemId=" + itemId + ", relevantItemId=" + relevantItemId + ", issueTypeLocator="
-        + locator + '}';
+        + locator + ", analysisSource=" + analysisSource + '}';
   }
 }

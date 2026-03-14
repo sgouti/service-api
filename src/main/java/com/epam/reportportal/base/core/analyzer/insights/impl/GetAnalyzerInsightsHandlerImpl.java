@@ -253,8 +253,27 @@ public class GetAnalyzerInsightsHandlerImpl implements GetAnalyzerInsightsHandle
           (left, right) -> right,
           LinkedHashMap::new
       )));
+      entry.setQualityGateStatus(computeQualityGate(content));
       return entry;
     }).toList();
+  }
+
+  private String computeQualityGate(ChartStatisticsContent content) {
+    int passed = parseMetric(content, EXECUTIONS_PASSED);
+    int failed = parseMetric(content, EXECUTIONS_FAILED);
+    int total = passed + failed + parseMetric(content, EXECUTIONS_SKIPPED);
+    if (total == 0) {
+      return "PASS";
+    }
+    double passRate = (double) passed / total * 100;
+    int productBugs = parseMetric(content, DEFECTS_PRODUCT_BUG_TOTAL);
+    if (passRate < 85 || productBugs >= 2) {
+      return "BLOCK";
+    }
+    if (passRate < 95 || productBugs >= 1) {
+      return "WARN";
+    }
+    return "PASS";
   }
 
   private AnalyzerInsightsRs.Comparison buildComparison(MembershipDetails membershipDetails,

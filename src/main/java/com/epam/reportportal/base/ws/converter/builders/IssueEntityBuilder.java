@@ -59,6 +59,13 @@ public class IssueEntityBuilder implements Supplier<IssueEntity> {
     return this;
   }
 
+  public IssueEntityBuilder addAnalysisSource(String analysisSource) {
+    if (analysisSource != null && !analysisSource.isEmpty()) {
+      issueEntity.setAnalysisSource(analysisSource);
+    }
+    return this;
+  }
+
   @Override
   public IssueEntity get() {
     return this.issueEntity;

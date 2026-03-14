@@ -63,6 +63,9 @@ public class IssueEntity implements Serializable {
   @Column(name = "ignore_analyzer")
   private boolean ignoreAnalyzer;
 
+  @Column(name = "analysis_source", length = 16)
+  private String analysisSource;
+
   @OneToOne
   @MapsId
   @JoinColumn(name = "issue_id")
@@ -123,6 +126,14 @@ public class IssueEntity implements Serializable {
 
   public void setIgnoreAnalyzer(Boolean ignoreAnalyzer) {
     this.ignoreAnalyzer = ignoreAnalyzer;
+  }
+
+  public String getAnalysisSource() {
+    return analysisSource;
+  }
+
+  public void setAnalysisSource(String analysisSource) {
+    this.analysisSource = analysisSource;
   }
 
   public TestItemResults getTestItemResults() {

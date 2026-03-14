@@ -288,6 +288,9 @@ public class AnalyzerInsightsRs {
     @JsonProperty("values")
     private Map<String, Integer> values = new LinkedHashMap<>();
 
+    @JsonProperty("qualityGateStatus")
+    private String qualityGateStatus;
+
     public Long getId() {
       return id;
     }
@@ -326,6 +329,14 @@ public class AnalyzerInsightsRs {
 
     public void setValues(Map<String, Integer> values) {
       this.values = values;
+    }
+
+    public String getQualityGateStatus() {
+      return qualityGateStatus;
+    }
+
+    public void setQualityGateStatus(String qualityGateStatus) {
+      this.qualityGateStatus = qualityGateStatus;
     }
   }
 

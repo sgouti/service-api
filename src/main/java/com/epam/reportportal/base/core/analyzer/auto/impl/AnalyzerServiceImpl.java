@@ -225,6 +225,7 @@ public class AnalyzerServiceImpl implements AnalyzerService {
         testItem.getItemResults().getIssue()).addIssueType(issueType)
         .addIgnoreFlag(testItem.getItemResults().getIssue().getIgnoreAnalyzer())
         .addAutoAnalyzedFlag(true)
+        .addAnalysisSource(rs.getAnalysisSource())
         .get();
     issueEntity.setIssueId(testItem.getItemId());
     issueEntity.setTestItemResults(testItem.getItemResults());
