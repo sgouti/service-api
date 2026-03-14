@@ -359,17 +359,23 @@ public class GetAnalyzerInsightsHandlerImpl implements GetAnalyzerInsightsHandle
         .sorted(Comparator.comparing(TestItem::getStartTime))
         .toList();
 
+    List<StatusEnum> historyStatuses = sortedHistory.stream()
+        .map(historyItem -> historyItem.getItemResults().getStatus())
+        .toList();
+
     int transitions = 0;
     Instant lastStatusChange = null;
     StatusEnum previousStatus = null;
-    for (TestItem historyItem : sortedHistory) {
-      StatusEnum currentStatus = historyItem.getItemResults().getStatus();
+    for (StatusEnum currentStatus : historyStatuses) {
       if (previousStatus != null && previousStatus != currentStatus) {
         transitions++;
-        lastStatusChange = historyItem.getStartTime();
+        lastStatusChange = sortedHistory.get(historyStatuses.indexOf(currentStatus)).getStartTime();
       }
       previousStatus = currentStatus;
     }
+
+    AnalyzerFlakinessSupport.FlakinessDecision decision = AnalyzerFlakinessSupport.analyze(
+        historyStatuses);
 
     AnalyzerItemFlakinessRs response = new AnalyzerItemFlakinessRs();
     response.setItemId(item.getItemId());
@@ -378,12 +384,12 @@ public class GetAnalyzerInsightsHandlerImpl implements GetAnalyzerInsightsHandle
     response.setUniqueId(item.getUniqueId());
     response.setCurrentStatus(item.getItemResults().getStatus().name());
     response.setTotalRuns(sortedHistory.size());
-    response.setFlakyTransitions(transitions);
-    response.setFlakyRate(sortedHistory.size() <= 1 ? 0
-        : Math.round(transitions * 100.0f / (sortedHistory.size() - 1)));
-    response.setFlaky(transitions > 0);
-    response.setQuarantined(response.isFlaky() && response.getTotalRuns() >= 3
-        && response.getFlakyRate() >= 50);
+    response.setFlakyTransitions(decision.transitions());
+    response.setFlakyRate(decision.flakyRate());
+    response.setFlakinessScore(decision.flakinessScore());
+    response.setLabel(decision.label());
+    response.setFlaky(decision.flaky());
+    response.setQuarantined(decision.quarantined());
     response.setLastStatusChange(lastStatusChange);
     response.setHistory(sortedHistory.stream().map(historyItem -> {
       AnalyzerItemFlakinessRs.HistoryEntry entry = new AnalyzerItemFlakinessRs.HistoryEntry();

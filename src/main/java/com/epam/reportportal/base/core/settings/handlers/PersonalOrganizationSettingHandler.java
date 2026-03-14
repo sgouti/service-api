@@ -16,13 +16,10 @@
 
 package com.epam.reportportal.base.core.settings.handlers;
 
-import com.epam.reportportal.base.core.organization.OrganizationExtensionPoint;
-import com.epam.reportportal.base.core.plugin.Pf4jPluginBox;
 import com.epam.reportportal.base.core.settings.ServerSettingHandler;
 import com.epam.reportportal.base.infrastructure.rules.exception.ErrorType;
 import com.epam.reportportal.base.infrastructure.rules.exception.ReportPortalException;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -33,21 +30,12 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class PersonalOrganizationSettingHandler implements ServerSettingHandler {
 
   public static final String PERSONAL_ORGANIZATION_SETTINGS_KEY = "server.features.personal-organization.enabled";
 
-  private final Pf4jPluginBox pluginBox;
-
   @Override
   public void handle(String value) {
-    pluginBox.getInstance(OrganizationExtensionPoint.class)
-        .orElseThrow(() -> new ReportPortalException(
-            ErrorType.BAD_REQUEST_ERROR,
-            "Organization management is not available. Please install the 'organization' plugin."
-        ));
-
     var enabled = Optional.ofNullable(value)
         .filter(v -> "true".equalsIgnoreCase(v) || "false".equalsIgnoreCase(v))
         .map(Boolean::parseBoolean)

@@ -16,7 +16,7 @@
 
 package com.epam.reportportal.base.ws.controller;
 
-import static com.epam.reportportal.base.auth.AuthorizationProvider.ALLOWED_TO_VIEW_PROJECT;
+import static com.epam.reportportal.base.auth.permissions.Permissions.ALLOWED_TO_VIEW_PROJECT;
 
 import com.epam.reportportal.base.core.analyzer.insights.AnalyzerProjectMetricsProvider;
 import com.epam.reportportal.base.infrastructure.persistence.commons.ReportPortalUser;

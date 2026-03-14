@@ -17,7 +17,6 @@
 package com.epam.reportportal.base.core.organization;
 
 import com.epam.reportportal.api.model.OrganizationInfo;
-import com.epam.reportportal.base.core.plugin.Pf4jPluginBox;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,15 +30,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonalOrganizationService {
 
-  private final Pf4jPluginBox pluginBox;
+  private final OrganizationManagementService organizationManagementService;
 
   /**
    * Constructor for PersonalOrganizationService.
    *
-   * @param pluginBox The plugin box to retrieve organization extensions.
+   * @param organizationManagementService Service resolving organization management operations.
    */
-  public PersonalOrganizationService(Pf4jPluginBox pluginBox) {
-    this.pluginBox = pluginBox;
+  public PersonalOrganizationService(OrganizationManagementService organizationManagementService) {
+    this.organizationManagementService = organizationManagementService;
   }
 
   /**
@@ -50,18 +49,11 @@ public class PersonalOrganizationService {
    */
   public Optional<OrganizationInfo> createPersonalOrganization(long userId) {
     try {
-      return getOrgExtension().map(ext -> ext.createPersonalOrganization(userId));
-    } catch (IllegalStateException e) {
-      log.warn("Can't create personal organization, reason: {}", e.getMessage());
-      return Optional.empty();
+      return Optional.of(organizationManagementService.createPersonalOrganization(userId));
     } catch (Exception e) {
       log.error("Can't create personal organization for user: {}", userId, e);
       return Optional.empty();
     }
-  }
-
-  private Optional<OrganizationExtensionPoint> getOrgExtension() {
-    return pluginBox.getInstance(OrganizationExtensionPoint.class);
   }
 
 }

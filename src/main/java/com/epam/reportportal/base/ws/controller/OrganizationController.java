@@ -35,10 +35,9 @@ import com.epam.reportportal.base.core.filter.SearchCriteriaService;
 import com.epam.reportportal.base.core.jasper.ReportFormat;
 import com.epam.reportportal.base.core.jasper.impl.OrganizationJasperReportHandler;
 import com.epam.reportportal.base.core.organization.GetOrganizationHandler;
-import com.epam.reportportal.base.core.organization.OrganizationExtensionPoint;
+import com.epam.reportportal.base.core.organization.OrganizationManagementService;
 import com.epam.reportportal.base.core.organization.patch.PatchOrganizationHandler;
 import com.epam.reportportal.base.core.organization.settings.OrganizationSettingsHandler;
-import com.epam.reportportal.base.core.plugin.Pf4jPluginBox;
 import com.epam.reportportal.base.infrastructure.persistence.commons.querygen.Condition;
 import com.epam.reportportal.base.infrastructure.persistence.commons.querygen.Filter;
 import com.epam.reportportal.base.infrastructure.persistence.commons.querygen.FilterCondition;
@@ -76,8 +75,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class OrganizationController extends BaseController implements OrganizationsApi {
 
   private final GetOrganizationHandler getOrganizationHandler;
+  private final OrganizationManagementService organizationManagementService;
   private final SearchCriteriaService searchCriteriaService;
-  private final Pf4jPluginBox pluginBox;
   private final OrganizationSettingsHandler organizationSettingsHandler;
   private final OrganizationJasperReportHandler organizationReportHandler;
   private final HttpServletResponse httpServletResponse;
@@ -152,7 +151,7 @@ public class OrganizationController extends BaseController implements Organizati
   @Transactional
   public ResponseEntity<OrganizationInfo> postOrganizations(CreateOrganizationRequest request) {
     var principal = SecurityContextUtils.getPrincipal();
-    var org = getOrgExtension().createOrganization(request, principal);
+    var org = organizationManagementService.createOrganization(request, principal);
     var location = ServletUriComponentsBuilder.fromCurrentRequest()
         .path("/{orgId}")
         .buildAndExpand(org.getId())
@@ -165,7 +164,7 @@ public class OrganizationController extends BaseController implements Organizati
   @Transactional
   public ResponseEntity<SuccessfulUpdate> putOrganizationsOrgId(Long orgId, UpdateOrganizationRequest request) {
     var principal = SecurityContextUtils.getPrincipal();
-    getOrgExtension().updateOrganization(orgId, request, principal);
+    organizationManagementService.updateOrganization(orgId, request, principal);
     return ResponseEntity.ok(new SuccessfulUpdate());
   }
 
@@ -174,7 +173,7 @@ public class OrganizationController extends BaseController implements Organizati
   @Transactional
   public ResponseEntity<Void> deleteOrganizationsOrgId(Long orgId) {
     var principal = SecurityContextUtils.getPrincipal();
-    getOrgExtension().deleteOrganization(orgId, principal);
+    organizationManagementService.deleteOrganization(orgId, principal);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
@@ -205,14 +204,6 @@ public class OrganizationController extends BaseController implements Organizati
   ) {
     patchOrganizationHandler.patchOrganization(patchOperations, orgId);
     return ResponseEntity.ok().body(new SuccessfulUpdate());
-  }
-
-  private OrganizationExtensionPoint getOrgExtension() {
-    return pluginBox.getInstance(OrganizationExtensionPoint.class)
-        .orElseThrow(() -> new ReportPortalException(
-            ErrorType.PAID_PLUGIN_REQUIRED,
-            "Organization", "Organization management is unavailable."
-        ));
   }
 
 }

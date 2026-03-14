@@ -55,6 +55,12 @@ public class AnalyzerItemFlakinessRs {
   @JsonProperty("flakyRate")
   private int flakyRate;
 
+  @JsonProperty("flakinessScore")
+  private Integer flakinessScore;
+
+  @JsonProperty("label")
+  private String label;
+
   @JsonProperty("lastStatusChange")
   private Instant lastStatusChange;
 
@@ -139,6 +145,22 @@ public class AnalyzerItemFlakinessRs {
 
   public void setFlakyRate(int flakyRate) {
     this.flakyRate = flakyRate;
+  }
+
+  public Integer getFlakinessScore() {
+    return flakinessScore;
+  }
+
+  public void setFlakinessScore(Integer flakinessScore) {
+    this.flakinessScore = flakinessScore;
+  }
+
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
   }
 
   public Instant getLastStatusChange() {

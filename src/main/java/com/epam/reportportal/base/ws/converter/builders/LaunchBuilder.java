@@ -20,6 +20,7 @@ import static com.epam.reportportal.base.ws.converter.converters.ItemAttributeCo
 import static java.util.Optional.ofNullable;
 
 import com.epam.reportportal.base.infrastructure.persistence.entity.ItemAttribute;
+import com.epam.reportportal.base.infrastructure.persistence.entity.enums.LaunchTypeEnum;
 import com.epam.reportportal.base.infrastructure.persistence.entity.enums.LaunchModeEnum;
 import com.epam.reportportal.base.infrastructure.persistence.entity.enums.StatusEnum;
 import com.epam.reportportal.base.infrastructure.persistence.entity.launch.Launch;
@@ -58,6 +59,7 @@ public class LaunchBuilder implements Supplier<Launch> {
     launch.setStartTime(request.getStartTime());
     launch.setName(request.getName().trim());
     launch.setStatus(StatusEnum.IN_PROGRESS);
+    launch.setLaunchType(LaunchTypeEnum.AUTOMATION);
     launch.setUuid(Optional.ofNullable(request.getUuid()).orElse(UUID.randomUUID().toString()));
     addDescription(request.getDescription());
     LaunchModeEnum.findByName(
