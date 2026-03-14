@@ -82,7 +82,14 @@ public class GetAnalyzerInsightsHandlerImpl implements GetAnalyzerInsightsHandle
   @Transactional(readOnly = true)
   public AnalyzerInsightsRs getLaunchInsights(MembershipDetails membershipDetails, Long launchId,
       Long compareToId, int historyDepth) {
+    final List<AnalyzerInsightsRs.LaunchRef> recentLaunches = loadRecentLaunches(
+        membershipDetails.getProjectId());
     final Launch launch = resolveLaunch(membershipDetails, launchId);
+    if (launch == null) {
+      AnalyzerInsightsRs response = new AnalyzerInsightsRs();
+      response.setRecentLaunches(recentLaunches);
+      return response;
+    }
     final int normalizedHistoryDepth = normalizeHistoryDepth(historyDepth);
     final List<Launch> historyLaunches = loadHistoryLaunches(launch, membershipDetails,
         normalizedHistoryDepth);
@@ -100,7 +107,7 @@ public class GetAnalyzerInsightsHandlerImpl implements GetAnalyzerInsightsHandle
     response.setLaunchId(launch.getId());
     response.setLaunchName(launch.getName());
     response.setLaunchNumber(launch.getNumber());
-    response.setRecentLaunches(loadRecentLaunches(membershipDetails.getProjectId()));
+    response.setRecentLaunches(recentLaunches);
     response.setCoverage(buildCoverage(currentItems));
     response.setTriageAging(buildTriageAging(currentItems));
     response.setReleaseAggregate(buildReleaseAggregate(membershipDetails, historyLaunches));
@@ -140,8 +147,7 @@ public class GetAnalyzerInsightsHandlerImpl implements GetAnalyzerInsightsHandle
             membershipDetails.getProjectId(), LaunchModeEnum.DEBUG)
         .stream()
         .findFirst()
-        .orElseThrow(() -> new ReportPortalException(LAUNCH_NOT_FOUND,
-            "No launches available for analyzer insights"));
+        .orElse(null);
   }
 
   private List<Launch> loadHistoryLaunches(Launch launch, MembershipDetails membershipDetails,
